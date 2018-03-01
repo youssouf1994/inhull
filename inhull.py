@@ -1,5 +1,6 @@
 import numpy as np
 from numpy.linalg import norm, det
+import time
 
 def zero_point_index(point_cloud):
 	for (index, point) in enumerate(point_cloud):
@@ -36,16 +37,19 @@ class inhull_2d:
 	
 	def check (self, point):
 		assert len(point) == self.dim
+		start_construct_time = time.time()
 		u = np.zeros(self.number_of_points)
 		
 		### Translate all points to zero
 		new_point_cloud = self.point_cloud - np.array(point, ndmin = 2)
 		
 		### Check if zero is an element of the new point_cloud
+		end_construct_time = time.time()
+		start_check_time = time.time()
 		index = zero_point_index (new_point_cloud)
 		if index >= 0:
 			u[index] = 1.
-			return {'__inhull' : True, '__u' : u}
+			return {'__inhull' : True, '__u' : u, 'mTime' : end_construct_time - start_construct_time, 'cTime' : time.time() - start_check_time}
 	
 		### The angles of the new point_cloud in [0,2pi[
 		angles = np.pi + np.arctan2(new_point_cloud[:,1], new_point_cloud[:,0])
@@ -71,7 +75,7 @@ class inhull_2d:
 			if new_index < self.number_of_points and angles[new_index] == new_angle:
 				u[index] = norm(new_points_cloud[new_index])
 				u[new_index] = norm(new_points_cloud[new_index])
-				return {'__inhull' : True, '__u' : u / np.sum(u)}
+				return {'__inhull' : True, '__u' : u / np.sum(u), 'mTime' : end_construct_time - start_construct_time, 'cTime' : time.time() - start_check_time}
 
 			right_index = angle_sort_indices[new_index % self.number_of_points]
 			left_index = angle_sort_indices[(new_index - 1) % self.number_of_points]
@@ -80,6 +84,6 @@ class inhull_2d:
 				u[index] = uu[0]
 				u[right_index] = uu[2]
 				u[left_index] = uu[1]
-				return {'__inhull' : True, '__u' : u / np.sum(u)}
+				return {'__inhull' : True, '__u' : u / np.sum(u), 'mTime' : end_construct_time - start_construct_time, 'cTime' : time.time() - start_check_time}
 			
-		return {'__inhull' : False, '__u' : None} 
+		return {'__inhull' : False, '__u' : None, 'mTime' : end_construct_time - start_construct_time, 'cTime' : time.time() - start_check_time}
