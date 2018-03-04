@@ -71,6 +71,17 @@ public:
 
 		return (pOrientation < qOrientation);
 	};
+	friend bool operator<= (const Point2D& p, const Point2D& q)
+	{
+		if (p.x == 0 && p.y == 0)
+			return (p.x == q.x && p.y == q.y);
+		if (q.x == 0 && q.y == 0)
+			return true;
+		double pOrientation = atan2(p.y, p.x);
+		double qOrientation = atan2(q.y, q.x);
+
+		return (pOrientation <= qOrientation);
+	};
 	friend Point2D operator+ (const Point2D& p, const Point2D& q)
 	{
 		return Point2D(p.x + q.x, p.y + q.y);
