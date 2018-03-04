@@ -29,6 +29,11 @@ public:
 	{
 		return Point3D(p.x / d, p.y / d, p.z / d);
 	};
+	friend ostream& operator<<(ostream& output,const Point3D& p)
+	{
+		output<<"("<<p.x<<","<<p.y<<","<<p.z<<")";
+		return output;
+	};
 };
 
 class Point2D
@@ -66,6 +71,15 @@ public:
 
 		return (pOrientation < qOrientation);
 	};
+	friend Point2D operator+ (const Point2D& p, const Point2D& q)
+	{
+		return Point2D(p.x + q.x, p.y + q.y);
+	};
+	friend Point2D operator* (const double d, const Point2D& p)
+	{
+		return Point2D(d*p.x, d*p.y);
+	};
+	
 	friend ostream& operator<<(ostream& output,const Point2D& p)
 	{
 		output<<"("<<p.x<<","<<p.y<<")";
