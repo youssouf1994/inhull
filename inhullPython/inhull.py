@@ -35,14 +35,12 @@ class inhull_2d:
 		self.point_cloud = point_cloud
 		self.dim = point_cloud.shape[1]
 	
-	def check (self, point):
-		assert len(point) == self.dim
+	def check (self):
 		start_construct_time = time.time()
 		u = np.zeros(self.number_of_points)
 		
 		### Translate all points to zero
-		new_point_cloud = self.point_cloud - np.array(point, ndmin = 2)
-		
+		new_point_cloud = self.point_cloud
 		### Check if zero is an element of the new point_cloud
 		end_construct_time = time.time()
 		start_check_time = time.time()

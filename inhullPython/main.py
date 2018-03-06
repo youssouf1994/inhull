@@ -1,5 +1,6 @@
 from inhull import inhull_2d as ih2
-from inhull_LP import inhull_LP as ihLP
+# from inhull_LP import inhull_LP as ihLP
+from inhull_optim import inhull_optim as ihO
 
 import numpy as np
 
@@ -53,15 +54,18 @@ for _ in range(N):
 	for __ in range(n):
 		points = random_points(ndim, dim)
 		ih_instance = ih2 (points)
-		res_ih2 = ih_instance.check(np.zeros(ih_instance.dim))
+		res_ih2 = ih_instance.check()
 		times_ih2.append(res_ih2['cTime'])
-		ih_instance = ihLP(points)
-		res_LP = ih_instance.check(np.zeros(ih_instance.dim))
-		times_LP.append(res_LP['cTime'])
+		# ih_instance = ihLP(points)
+		# res_LP = ih_instance.check()
+		# times_LP.append(res_LP['cTime'])
+		ih_instance = ihO(points)
+		res_ihO = ih_instance.check()
 	        # print(str(res_ih2['__inhull'] == res_LP['__inhull']))
+		print (str(res_ihO['__inhull']) + " " + str(res_ih2['__inhull']))
 	times_ih2 = np.array(times_ih2)
 	times_LP = np.array(times_LP)
-	plt.plot(range(n), times_ih2 / times_LP)
-	plt.savefig("figures/fig" + str(_))
+	# plt.plot(range(n), times_ih2 / times_LP)
+	# plt.savefig("figures/fig" + str(_))
 
 

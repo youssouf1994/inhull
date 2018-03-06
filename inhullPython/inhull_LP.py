@@ -10,10 +10,10 @@ class inhull_LP:
 		self.number_of_points = point_cloud.shape[0]
 		self.dim = point_cloud.shape[1]
 	
-	def check(self, point, stream = None):
+	def check(self, stream = None):
 		### Constructing a model
 		start_construct_time = time.time()
-		new_point_cloud = self.point_cloud - np.array(point, ndmin=2)
+		new_point_cloud = self.point_cloud
 		#### model = Model()
 		#### u = model.continuous_var_list(self.number_of_points, lb = 0, ub = 1, name='u')
 		#### for i in range(self.dim):

@@ -7,11 +7,19 @@ def random_points(n, dim):
 import sys
 
 if __name__ == "__main__":
-	if len(sys.argv) < 2:
-		print ("Please add an argument for the number of points")
+	if len(sys.argv) < 3:
+		print ("Please add an argument for the number of points or the dim argument")
 		sys.exit(0)
-	n = int(sys.argv[1])
+	dim = int(sys.argv[1])
+	print dim
+	n = int(sys.argv[2])
+	print n
 	for i in range(n):
-		p = randn(2)
-		print(str(p[0]) + " " + str(p[1]))
+		p = randn(dim)
+		out = ""
+		for i in range (dim):
+			out += str(p[i])
+			if (i < dim - 1):
+				out += " " 
+		print(out)
 
